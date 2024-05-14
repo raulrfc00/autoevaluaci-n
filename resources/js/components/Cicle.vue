@@ -18,8 +18,8 @@
     <tbody>
 
                 <tr v-for="cicle in cicles">
-                    <td>{{ cicle.sigles }}</td>
-                    <td>{{ cicle.descripcio }}</td>
+                    <td> {{ cicle.sigles }} </td>
+                    <td> {{ cicle.descripcio }} </td>
                     <td>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="actiu" name="actiu"
@@ -59,14 +59,20 @@ export default {
             cicles: [],
         }
     },
-    created() {
-        const me = this
+    methods:{
+        showCicle(){
+            const me = this
         axios.get("/M07/autoevaluacion/public/api/cicle")
             .then(response => {
                 console.log(response)
-                me.cicles = response.data
+                me.cicles = response.data.data
             })
+        },
     },
+    created() {
+        this.showCicle()
+    },
+
 }
 </script>
 <style lang="">
