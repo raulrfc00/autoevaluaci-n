@@ -86,7 +86,11 @@ class CicleController extends Controller
      */
     public function destroy(Cicle $cicle)
     {
-        $cicle->delete();
-        return redirect()->route('cicles.index')->with('success', 'Cicle deleted successfully.');
+        try {
+            $cicle->delete();
+            return response()->json(['message' => 'Cicle deleted successfully.'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error deleting Cicle.'], 500);
+        }
     }
 }

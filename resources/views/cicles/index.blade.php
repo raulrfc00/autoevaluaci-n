@@ -5,7 +5,7 @@
 @endsection
 
 @section('contenido')
-    <div id='cicle'>
+    <div id='cicle' class="container-fluid">
 
     </div>
 @endsection
