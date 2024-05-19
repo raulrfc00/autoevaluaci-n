@@ -2,9 +2,9 @@
     <div class="card mt-3 border-secondary">
         <div class="card-header bg-secondary fs-4 fw-bold text-white">
             Cicles
-            <a href="{{ url('cicle/create') }} " class="btn btn-primary float-end">
+            <button class="btn btn-primary float-end" @click="showForm()">
                 <i class="bi bi-plus-circle"></i> Afegir cicle
-            </a>
+            </button>
         </div>
 <div class="card-body">
     <table class="table">
@@ -75,6 +75,47 @@
   </div>
 </div>
 
+    <!-- Modal insert/update -->
+
+    <div class="modal" tabindex="-1" id="insert/update">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cicle</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="mb-3">
+            <label for="formGroupExampleInput" class="form-label">Sigles</label>
+            <input type="text" class="form-control" id="sigles" name="sigles" v-model="cicle.sigles">
+        </div>
+        <div class="mb-3">
+            <label for="formGroupExampleInput2" class="form-label">Descripciò</label>
+            <input type="text" class="form-control" id="descripcio" name="descripcio" v-model="cicle.descripcio">
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="actiu" name="actiu" v-model="cicle.actiu">
+            <label class="form-check-label" for="gridCheck1">
+            Actiu
+            </label>
+        </div>
+        <span v-if="isError" class="badge text-bg-danger">{{messageError}}</span>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Tancar
+        </button>
+        <button type="submit" class="btn btn-primary" @click="insertCicle()">
+            <i class="bi bi-plus-circle" ></i>
+            Afegir
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </template>
 <script>
 
@@ -93,6 +134,12 @@ export default {
         }
     },
     methods:{
+            showForm(){
+                this.isError = false
+                this.myModal = new bootstrap.Modal('#insert/update')
+                this.myModal.show()
+            },
+
             showCicle(){
                 const me = this
             axios.get("cicle")
@@ -104,12 +151,26 @@ export default {
 
                 })
             },
+            insertCicle(){
+                const me = this
+            axios.post("cicle/", me.cicle)
+                .then(response => {
+                    me.showCicle()
+                    me.myModal.hide
+                })
+                .catch(error => {
+                    this.isError = true
+                    console.log(error)
+                    me.messageError = error.response.data.error
+                })
+            },
             confirmDelete(cicle){
                 this.isError = false
                 this.cicle = cicle
                 this.myModal = new bootstrap.Modal('#deleteModal')
                 this.myModal.show()
             },
+            
             deleteCicle(){
                 const me = this
             axios.delete("cicle/" + me.cicle.id)
@@ -119,6 +180,7 @@ export default {
                 })
                 .catch(error => {
                     this.isError = true
+                    console.log(error)
                     me.messageError = error.response.data.error
                 })
             }
