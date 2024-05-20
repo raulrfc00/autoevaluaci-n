@@ -33,13 +33,12 @@ class CicleController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'sigles' => 'required|max:255',
-            'descripcio' => 'required',
-            'actiu' => 'required|boolean'
-        ]);
 
-        $cicle = new Cicle($request->all());
+
+        $cicle = new Cicle();
+        $cicle->sigles = $request->input('sigles');
+        $cicle->descripcio = $request->input('descripcio');
+        $cicle->actiu = $request->input('actiu');
         $cicle->save();
 
         return redirect()->route('cicles.index')->with('success', 'Cicle created successfully.');
@@ -69,12 +68,11 @@ class CicleController extends Controller
      */
     public function update(Request $request, Cicle $cicle)
     {
-        $request->validate([
-            'sigles' => 'required|max:255',
-            'descripcio' => 'required',
-            'actiu' => 'required|boolean'
-        ]);
 
+
+        $cicle->sigles = $request->input('sigles');
+        $cicle->descripcio = $request->input('descripcio');
+        $cicle->actiu = $request->input('actiu');
         $cicle->save();
 
         return redirect()->route('cicles.index')->with('success', 'Cicle updated successfully.');
@@ -94,3 +92,4 @@ class CicleController extends Controller
         }
     }
 }
+
