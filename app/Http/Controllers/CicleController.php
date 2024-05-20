@@ -34,14 +34,14 @@ class CicleController extends Controller
     public function store(Request $request)
     {
 
-
+        // Crear un nuevo ciclo
         $cicle = new Cicle();
         $cicle->sigles = $request->input('sigles');
         $cicle->descripcio = $request->input('descripcio');
         $cicle->actiu = $request->input('actiu');
         $cicle->save();
 
-        return redirect()->route('cicles.index')->with('success', 'Cicle created successfully.');
+        return response()->json(['message' => 'Cicle created successfully.', 'data' => $cicle], 201);
     }
 
     /**
@@ -75,7 +75,7 @@ class CicleController extends Controller
         $cicle->actiu = $request->input('actiu');
         $cicle->save();
 
-        return redirect()->route('cicles.index')->with('success', 'Cicle updated successfully.');
+        return response()->json(['message' => 'Cicle updated successfully.', 'data' => $cicle], 200);
     }
 
     /**
