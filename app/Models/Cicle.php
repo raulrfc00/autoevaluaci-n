@@ -13,7 +13,7 @@ class Cicle extends Model
 
     protected $primaryKey = 'id'; // La clave principal, 'id' es el valor predeterminado y no necesita ser definido explícitamente
 
-    // public $incrementing = true; por defecto es true
+    public $timestamps = false; // Deshabilitar timestamps
 
     // protected $keyType = 'INT'; pordefecto se considera INT 
 }

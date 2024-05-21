@@ -56,7 +56,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Tancar
                     </button>
-                    <button type="button" class="btn btn-danger" @click="deleteCicle">
+                    <button type="button" class="btn btn-danger" @click="deleteCicle()">
                         <i class="bi bi-trash3-fill"></i> Aceptar
                     </button>
                 </div>
@@ -91,7 +91,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Tancar
                     </button>
-                    <button type="button" class="btn btn-primary" @click="insertCicle">
+                    <button type="button" class="btn btn-primary" @click="insertCicle()">
                         <i class="bi bi-plus-circle"></i> Afegir
                     </button>
                 </div>
@@ -137,7 +137,7 @@ export default {
         },
         insertCicle() {
             console.log("insertCicle called", this.cicle);
-            axios.post("cicle/", this.cicle)
+            axios.post("cicle", this.cicle)
                 .then(response => {
                     console.log("insertCicle response", response);
                     this.showCicle();

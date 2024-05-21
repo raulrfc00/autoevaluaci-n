@@ -42,6 +42,13 @@ class CicleController extends Controller
         $cicle->save();
 
         return response()->json(['message' => 'Cicle created successfully.', 'data' => $cicle], 201);
+
+        // try {
+        //     $cicle->save();
+        //     return response()->json(['message' => 'Cicle created successfully.'], 201);
+        // } catch (\Exception $e) {
+        //     return response()->json(['message' => 'Error creating Cicle.'], 500);
+        // }
     }
 
     /**
