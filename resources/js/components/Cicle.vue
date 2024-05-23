@@ -29,7 +29,7 @@
                                 <button class="btn btn-danger btn-sm" @click="confirmDelete(cicle)">
                                     <i class="bi bi-trash3-fill"></i> Esborrar
                                 </button>
-                                <button class="btn btn-secondary btn-sm me-2">
+                                <button class="btn btn-secondary btn-sm me-2" @click="editCicle(cicle)">
                                     <i class="bi bi-pencil-square"></i> Editar
                                 </button>
                             </div>
@@ -69,7 +69,9 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Cicle</h5>
+                    <h5 v-if="insert" class="modal-title">Cicle</h5>
+                    <h5 v-else="insert" class="modal-title">Modificar Cicle</h5>
+
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -82,7 +84,7 @@
                         <input type="text" class="form-control" id="descripcio" v-model="cicle.descripcio">
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="actiu" v-model="cicle.actiu">
+                        <input class="form-check-input" type="checkbox" id="actiu" v-model="cicle.actiu" :checked="cicle.actiu">
                         <label class="form-check-label" for="actiu">Actiu</label>
                     </div>
                     <span v-if="isError" class="badge text-bg-danger">{{ messageError }}</span>
@@ -91,8 +93,11 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Tancar
                     </button>
-                    <button type="button" class="btn btn-primary" @click="insertCicle()">
+                    <button v-if="insert" type="button" class="btn btn-primary" @click="insertCicle()">
                         <i class="bi bi-plus-circle"></i> Afegir
+                    </button>
+                    <button v-else type="button" class="btn btn-primary" @click="updateCicle()">
+                        <i class="bi bi-plus-circle"></i> Modificar
                     </button>
                 </div>
             </div>
@@ -115,7 +120,8 @@ export default {
                 actiu: false
             },
             messageError: "",
-            isError: false
+            isError: false,
+            insert: false,
         };
     },
     methods: {
@@ -130,6 +136,7 @@ export default {
                 });
         },
         showForm() {
+            this.insert = true;
             this.isError = false;
             this.cicle = { sigles: '', descripcio: '', actiu: false }; // Limpiar el formulario
             this.myModal = new bootstrap.Modal(document.getElementById('insertUpdateModal'));
@@ -146,6 +153,24 @@ export default {
                 .catch(error => {
                     this.isError = true;
                     console.log("insertCicle error", error);
+                    this.messageError = error.response.data.error;
+                });
+        },
+        editCicle(cicle){
+            this.insert=false;
+            this.cicle = cicle
+            this.myModal = new bootstrap.Modal(document.getElementById('insertUpdateModal'));
+            this.myModal.show();
+        },
+        updateCicle(){
+            console.log("updateCicle called", this.cicle);
+            axios.put("cicle/" + this.cicle.id, this.cicle)
+                .then(response => {
+                    this.showCicle();
+                    this.myModal.hide();
+                })
+                .catch(error => {
+                    this.isError = true;
                     this.messageError = error.response.data.error;
                 });
         },
