@@ -29,7 +29,7 @@ class UsuarisController extends Controller
         $usuari->nom = $request->input('nom');
         $usuari->cognom = $request->input('cognom');
         $usuari->actiu = $request->input('actiu');
-        // $usuari->tipus_usuaris_id = $request->input('tipus_usuaris_id');
+        $usuari->tipus_usuaris_id = $request->input('tipus_usuaris_id');
 
         $usuari->save();
 

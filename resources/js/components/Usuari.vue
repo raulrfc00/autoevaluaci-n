@@ -102,6 +102,10 @@
                         <label for="cognom" class="form-label">Cognom</label>
                         <input type="text" class="form-control" id="cognom" v-model="usuari.cognom">
                     </div>
+                    <div class="mb-3">
+                        <label for="cognom" class="form-label">Tipus usuari</label>
+                        <input type="number" class="form-control" id="cognom" v-model="usuari.tipus_usuaris_id">
+                    </div>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="actiu" v-model="usuari.actiu">
                         <label class="form-check-label" for="actiu">Actiu</label>
