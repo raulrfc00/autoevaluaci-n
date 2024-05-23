@@ -16,4 +16,9 @@ class Cicle extends Model
     public $timestamps = false; // Deshabilitar timestamps
 
     // protected $keyType = 'INT'; pordefecto se considera INT 
+
+    public function moduls()
+    {
+        return $this->hasMany(Moduls::class);
+    }
 }

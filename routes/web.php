@@ -15,5 +15,13 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function() {
-    return view('cicles.index');
+    return view('layouts.index');
+});
+
+Route::get('/cicles', function() {
+    return view('dadesMestres.cicles.index');
+});
+
+Route::get('/usuaris', function() {
+    return view('dadesMestres.usuaris.index');
 });

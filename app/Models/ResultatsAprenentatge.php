@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Moduls extends Model
+class ResultatsAprenentatge extends Model
 {
     use HasFactory;
-
-    protected $table = 'moduls'; // Nombre de la tabla
+    
+    protected $table = 'resultats_aprenentatge'; // Nombre de la tabla
 
     protected $primaryKey = 'id'; // La clave principal, 'id' es el valor predeterminado y no necesita ser definido explícitamente
 
@@ -17,18 +17,13 @@ class Moduls extends Model
 
     // protected $keyType = 'INT'; pordefecto se considera INT 
 
-    public function cicle()
+    public function modul()
     {
-        return $this->belongsTo(Cicle::class);
+        return $this->belongsTo(Moduls::class);
     }
 
-    public function resultats_aprenentatge()
+    public function criteris_avaluacio()
     {
-        return $this->hasMany(ResultatsAprenentatge::class);
-    }
-
-    public function usuaris()
-    {
-        return $this->belongsToMany(Usuaris::class, 'usuaris_has_moduls');
+        return $this->hasMany(CriterisAvaluacio::class);
     }
 }
