@@ -17,6 +17,20 @@ Route::get('/', function() {
     return view('layouts.login');
 });
 
+Route::get('/login', [UsuarisController::class, 'showLogin'])->name('login');
+Route::post('/login', [UsuarisController::class, 'login']);
+Route::post('/login', [UsuarisController::class, 'logout']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', funtion(){
+        $user = Auth::user();
+
+        return view('home', compact('user'))
+    });
+});
+
+
+
 Route::get('/admin', function() {
     return view('layouts.index');
 });

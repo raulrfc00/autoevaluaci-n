@@ -15,6 +15,29 @@ class UsuarisController extends Controller
         return UsuariResource::collection($usuaris);
     }
 
+    public function showlogin()
+    {
+        return view('auth.login');
+    }
+
+    public function login()
+    {
+        $username = $request->input('username');
+        $contrasenya = $request->input('nostrasenya');
+
+        $user = Usuari::Where('username', $username)->first();
+
+        if ($user != null && Hash::check('contrasenya', $user->contrasenya)){
+            Auth::login($user);
+            $response = redirect('/home');
+        }else{
+            $request->session()->flash('error', 'usuari o contrasenya incorrectes');
+            $response = redirect('/login')->whitInput();
+        }
+        return $response;
+
+    }
+
     public function create()
     {
         return view('usuaris.create');
