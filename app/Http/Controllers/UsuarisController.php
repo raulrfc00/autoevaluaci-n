@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Usuari;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\UsuariResource;
 
 class UsuarisController extends Controller
@@ -15,27 +17,27 @@ class UsuarisController extends Controller
         return UsuariResource::collection($usuaris);
     }
 
-    public function showlogin()
+    public function showLogin()
     {
         return view('auth.login');
     }
 
-    public function login()
+    public function login(Request $request)
     {
         $username = $request->input('username');
-        $contrasenya = $request->input('nostrasenya');
-
-        $user = Usuari::Where('username', $username)->first();
-
-        if ($user != null && Hash::check('contrasenya', $user->contrasenya)){
+        $contrasenya = $request->input('contrasenya');
+    
+        $user = Usuari::where('nom_usuari', $username)->first();
+    
+        if ($user != null && Hash::check($contrasenya, $user->contrasenya)) {
             Auth::login($user);
             $response = redirect('/home');
-        }else{
+        } else {
             $request->session()->flash('error', 'usuari o contrasenya incorrectes');
-            $response = redirect('/login')->whitInput();
+            $response = redirect('/login')->withInput();
         }
+    
         return $response;
-
     }
 
     public function create()

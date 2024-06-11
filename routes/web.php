@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsuarisController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,18 +16,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function() {
-    return view('layouts.login');
+    return view('tipos.index');
 });
 
 Route::get('/login', [UsuarisController::class, 'showLogin'])->name('login');
 Route::post('/login', [UsuarisController::class, 'login']);
-Route::post('/login', [UsuarisController::class, 'logout']);
+Route::post('/logout', [UsuarisController::class, 'logout']);
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/home', funtion(){
+    Route::get('/home', function(){
         $user = Auth::user();
 
-        return view('home', compact('user'))
+        return view('home', compact('user'));
     });
 });
 
